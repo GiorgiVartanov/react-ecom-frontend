@@ -12,9 +12,27 @@ const initialState = {
 
 export const getProducts = createAsyncThunk(
     "products/all",
-    async (category, thunkAPI) => {
+    async ({ category, title }, thunkAPI) => {
         try {
-            return await productService.getProducts(category)
+            return await productService.getProducts({ category, title })
+        } catch (error) {
+            const errorMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toSting()
+
+            return thunkAPI.rejectWithValue(errorMessage)
+        }
+    }
+)
+
+export const getProduct = createAsyncThunk(
+    "products/single",
+    async (id, thunkAPI) => {
+        try {
+            return await productService.getProduct(id)
         } catch (error) {
             const errorMessage =
                 (error.response &&

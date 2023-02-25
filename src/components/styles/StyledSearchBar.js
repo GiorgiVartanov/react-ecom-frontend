@@ -5,7 +5,7 @@ export const StyledSearchBar = styled.input`
     display: block;
     margin-top: 2rem;
     border: none;
-    outline: 1px solid ${({ theme }) => theme.colors.text};
-    color: ${({ theme }) => theme.colors.text};
+    outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
+    color: ${({ theme }) => theme.colors.mainSecondary};
     padding: 0.25rem 0.75rem;
 `

@@ -13,7 +13,7 @@ const theme = {
     colors: {
         main: "#78b3d8",
         mainDimmed: "#9cbbce",
-        mainSecondary: "#132020",
+        mainSecondary: "#10132c",
         error: "#c93c38",
         background: "#f7fdff",
         secondaryBackground: "#240D0A",

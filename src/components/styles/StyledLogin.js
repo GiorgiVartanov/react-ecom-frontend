@@ -7,14 +7,14 @@ export const StyledLogin = styled.form`
     width: calc(100% - 1rem);
     max-width: 360px;
     padding: 0.5rem;
-    outline: 1px solid ${({ theme }) => theme.colors.text};
+    outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
     animation: ${appearAnimation} 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     position: relative;
     z-index: 1;
 
     h2 {
         font-size: 1.25rem;
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.mainSecondary};
         margin-bottom: 0.5rem;
     }
 
@@ -22,9 +22,9 @@ export const StyledLogin = styled.form`
         width: 100%;
         padding: 0.25rem 0;
         border: none;
-        outline: 1px solid ${({ theme }) => theme.colors.text};
+        outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
         background-color: ${({ theme }) => theme.colors.main};
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.mainSecondary};
         font-weight: 500;
         transition: 0.1s ease-in;
         position: relative;
@@ -40,7 +40,7 @@ export const StyledLogin = styled.form`
         &::before {
             content: "";
             position: absolute;
-            background-color: ${({ theme }) => theme.colors.text};
+            background-color: ${({ theme }) => theme.colors.mainSecondary};
             bottom: 0;
             left: 0;
             width: 100%;
@@ -53,7 +53,7 @@ export const StyledLogin = styled.form`
 
     button[disabled] {
         /* background-color: ${({ theme }) => theme.colors.mainDimmed}; */
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.mainSecondary};
         opacity: 0.7;
 
         &:hover,

@@ -10,7 +10,7 @@ import {
 import SearchBar from "./SearchBar"
 import CategoryItem from "./CategoryItem"
 
-const Search = () => {
+const Search = ({ onChange, value }) => {
     const dispatch = useDispatch()
 
     const {
@@ -27,7 +27,6 @@ const Search = () => {
     }, [dispatch])
 
     const handleOnClick = (e) => {
-        // console.log(e.target.textContent)
         dispatch(selectCategory(e.target.textContent))
     }
 
@@ -35,7 +34,11 @@ const Search = () => {
 
     return (
         <StyledSearch>
-            <SearchBar placeholder="search 🔍" />
+            <SearchBar
+                onChange={onChange}
+                value={value}
+                placeholder="search 🔍"
+            />
             <div className="category-list">
                 {categories.map((category) => (
                     <CategoryItem

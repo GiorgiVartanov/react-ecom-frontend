@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const StyledInput = styled.input`
-    outline: 1px solid ${({ theme }) => theme.colors.text};
+    outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
     border: none;
     padding: 0.25rem 0.5rem;
     font-family: inherit;

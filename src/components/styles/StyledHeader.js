@@ -74,7 +74,7 @@ export const StyledHeader = styled.header`
                             content: "";
                             position: absolute;
                             background-color: ${({ theme }) =>
-                                theme.colors.text};
+                                theme.colors.mainSecondary};
                             bottom: 0;
                             left: 0;
                             width: 100%;

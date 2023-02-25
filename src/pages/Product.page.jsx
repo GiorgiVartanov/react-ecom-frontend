@@ -1,37 +1,35 @@
 import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 import { StyledProductPage } from "../components/styles/StyledProductPage"
+
+import Spinner from "../components/Spinner"
 
 const Product = () => {
     const { id } = useParams()
 
-    // const {
-    //     data: product,
-    //     isLoading,
-    //     isSuccess,
-    //     isError,
-    //     error,
-    // } = useGetProductByIdQuery(id)
+    const { products, isLoading, isError, isSuccess, errorMessage } =
+        useSelector((state) => state.product)
 
-    // if (isError) {
-    //     console.log(error)
-    //     return <div>Error, check console for more information</div>
-    // }
+    const product = products.filter((product) => product._id === id)[0]
 
-    // if (isLoading) return <div>Loading...</div>
+    if (isError) {
+        console.log(errorMessage)
+        return <div>Error, check console for more information</div>
+    }
 
-    // console.log(product)
+    if (isLoading) return <Spinner />
 
     return (
         <StyledProductPage>
-            {/* <img
+            <img
                 src={product.image}
                 alt={product.name}
             />
             <div className="product-text">
                 <h2>{product.title}</h2>
                 <p>{product.description}</p>
-            </div> */}
+            </div>
         </StyledProductPage>
     )
 }

@@ -8,6 +8,8 @@ import ProductList from "../components/ProductList"
 import Search from "../components/Search"
 
 const Main = () => {
+    const [searchValue, setSearchValue] = useState("")
+
     const dispatch = useDispatch()
 
     const { products, isLoading, isError, isSuccess, errorMessage } =
@@ -15,8 +17,28 @@ const Main = () => {
 
     const { selectedCategory } = useSelector((state) => state.category)
 
+    const handleOnChange = (e) => {
+        setSearchValue(e.target.value)
+    }
+
     useEffect(() => {
-        dispatch(getProducts(selectedCategory || "All"))
+        // it will call 1.5s after user last typed
+
+        const timer = setTimeout(() => {
+            dispatch(
+                getProducts({ category: selectedCategory, title: searchValue })
+            )
+        }, 1500)
+
+        return () => clearTimeout(timer)
+    }, [searchValue, dispatch])
+
+    useEffect(() => {
+        // it will call immediately after user changes category
+
+        dispatch(
+            getProducts({ category: selectedCategory, title: searchValue })
+        )
     }, [selectedCategory, dispatch])
 
     if (isError) {
@@ -26,7 +48,10 @@ const Main = () => {
 
     return (
         <Page>
-            <Search />
+            <Search
+                onChange={handleOnChange}
+                value={searchValue}
+            />
             <ProductList
                 isLoading={isLoading}
                 products={products}
