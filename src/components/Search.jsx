@@ -2,10 +2,8 @@ import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import { StyledSearch } from "./styles/StyledSearch"
-import {
-    getCategories,
-    selectCategory,
-} from "../features/category/categorySlice"
+import { selectCategory } from "../features/category/categorySlice"
+import { useGetProductCategoriesQuery } from "../features/api/apiSlice"
 
 import SearchBar from "./SearchBar"
 import CategoryItem from "./CategoryItem"
@@ -13,24 +11,19 @@ import CategoryItem from "./CategoryItem"
 const Search = ({ onChange, value }) => {
     const dispatch = useDispatch()
 
-    const {
-        categories,
-        selectedCategory,
-        isLoading,
-        isError,
-        isSuccess,
-        errorMessage,
-    } = useSelector((state) => state.category)
+    const { selectedCategory } = useSelector((state) => state.category)
 
-    useEffect(() => {
-        dispatch(getCategories())
-    }, [dispatch])
+    const {
+        data: categories,
+        isLoading,
+        error,
+    } = useGetProductCategoriesQuery()
 
     const handleOnClick = (e) => {
         dispatch(selectCategory(e.target.textContent))
     }
 
-    // if (isLoading) return
+    if (isLoading) return
 
     return (
         <StyledSearch>

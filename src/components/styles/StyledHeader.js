@@ -50,6 +50,7 @@ export const StyledHeader = styled.header`
                         background-color: transparent;
                         display: block;
                         cursor: pointer;
+                        width: 100%;
 
                         &:hover,
                         &:active {
@@ -66,7 +67,12 @@ export const StyledHeader = styled.header`
 
                             &:hover,
                             &:active {
-                                opacity: 0.9;
+                                &::before {
+                                    height: 100%;
+                                    opacity: 0.1;
+                                    background-color: ${({ theme }) =>
+                                        theme.colors.mainDimmed};
+                                }
                             }
                         }
 

@@ -46,7 +46,7 @@ const Header = () => {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to="/">shop</NavLink>
+                            <NavLink to="/shop">shop</NavLink>
                         </li>
                         {user ? (
                             <>

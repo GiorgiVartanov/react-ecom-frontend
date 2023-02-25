@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -20,9 +20,15 @@ export const App = () => {
             <Routes>
                 <Route
                     path="/"
-                    element={<Main />}
+                    element={
+                        <Navigate
+                            to="/shop"
+                            replace={true}
+                        />
+                    }
                 />
                 <Route
+                    index
                     path="/shop"
                     element={<Main />}
                 />

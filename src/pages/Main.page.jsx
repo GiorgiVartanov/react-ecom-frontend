@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 import { Page } from "../components/styles/Page"
 import { getProducts, reset } from "../features/product/productSlice"
+import { useGetAllProductsQuery } from "../features/api/apiSlice"
 
 import ProductList from "../components/ProductList"
 import Search from "../components/Search"
@@ -10,39 +11,23 @@ import Search from "../components/Search"
 const Main = () => {
     const [searchValue, setSearchValue] = useState("")
 
-    const dispatch = useDispatch()
-
-    const { products, isLoading, isError, isSuccess, errorMessage } =
-        useSelector((state) => state.product)
-
     const { selectedCategory } = useSelector((state) => state.category)
+
+    const {
+        data: products,
+        isLoading,
+        error,
+    } = useGetAllProductsQuery({
+        category: selectedCategory,
+        title: searchValue,
+    })
 
     const handleOnChange = (e) => {
         setSearchValue(e.target.value)
     }
 
-    useEffect(() => {
-        // it will call 1.5s after user last typed
-
-        const timer = setTimeout(() => {
-            dispatch(
-                getProducts({ category: selectedCategory, title: searchValue })
-            )
-        }, 1500)
-
-        return () => clearTimeout(timer)
-    }, [searchValue, dispatch])
-
-    useEffect(() => {
-        // it will call immediately after user changes category
-
-        dispatch(
-            getProducts({ category: selectedCategory, title: searchValue })
-        )
-    }, [selectedCategory, dispatch])
-
-    if (isError) {
-        console.log(errorMessage)
+    if (error) {
+        console.log(error)
         return <div>Error, check console for more information</div>
     }
 
@@ -53,8 +38,8 @@ const Main = () => {
                 value={searchValue}
             />
             <ProductList
-                isLoading={isLoading}
                 products={products}
+                isLoading={isLoading}
             />
         </Page>
     )

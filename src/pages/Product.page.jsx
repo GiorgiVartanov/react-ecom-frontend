@@ -2,19 +2,22 @@ import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { StyledProductPage } from "../components/styles/StyledProductPage"
+import { useGetProductByIdQuery } from "../features/api/apiSlice"
 
 import Spinner from "../components/Spinner"
 
 const Product = () => {
     const { id } = useParams()
 
-    const { products, isLoading, isError, isSuccess, errorMessage } =
-        useSelector((state) => state.product)
+    // const { products, isLoading, isError, isSuccess, errorMessage } =
+    //     useSelector((state) => state.product)
 
-    const product = products.filter((product) => product._id === id)[0]
+    const { data: product, isLoading, error } = useGetProductByIdQuery(id)
 
-    if (isError) {
-        console.log(errorMessage)
+    // const product = products.filter((product) => product._id === id)[0]
+
+    if (error) {
+        console.log(error)
         return <div>Error, check console for more information</div>
     }
 
