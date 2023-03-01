@@ -49,7 +49,7 @@ export const App = () => {
                     element={<Register />}
                 />
             </Routes>
-            <ToastContainer />
+            <ToastContainer position="bottom-right" />
         </div>
     )
 }

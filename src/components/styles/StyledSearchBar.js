@@ -8,4 +8,6 @@ export const StyledSearchBar = styled.input`
     outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
     color: ${({ theme }) => theme.colors.mainSecondary};
     padding: 0.25rem 0.75rem;
+    max-width: 320px;
+    width: 100%;
 `

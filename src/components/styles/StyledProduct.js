@@ -12,7 +12,11 @@ export const StyledProduct = styled.li`
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    /* backdrop-filter: ${({ isActive, theme }) =>
+        isActive ? "blur(80%)" : ""} !important; */
+
     cursor: pointer;
+
     animation: ${appearAnimation} 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
@@ -26,11 +30,12 @@ export const StyledProduct = styled.li`
         content: "";
         position: absolute;
         background-color: ${({ theme }) => theme.colors.mainSecondary};
+        height: ${({ isActive }) => (isActive ? "100%" : "")} !important;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 0;
-        opacity: 0.1;
+        opacity: ${({ isActive }) => (isActive ? "0.2" : "0.1")} !important;
         transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
     }
@@ -44,6 +49,34 @@ export const StyledProduct = styled.li`
         width: 200px;
         margin: 0.5rem auto;
         transition: 0.2s ease-in;
+
+        .product-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 0.25rem;
+            justify-content: center;
+            position: absolute;
+            top: 40%;
+            right: 50%;
+            transform: translateX(50%);
+            border: 1px solid ${({ theme }) => theme.colors.mainSecondary};
+            padding: 0.25rem 0.5rem;
+            background-color: ${({ theme }) =>
+                theme.colors.backgroundSecondary};
+            opacity: 0.8;
+            height: fit-content;
+            backdrop-filter: blur(10px);
+
+            li {
+                height: 2rem;
+
+                button {
+                    height: 2rem;
+                    width: 2rem;
+                    /* padding: 0.25rem; */
+                }
+            }
+        }
     }
 
     .product-text {
@@ -55,7 +88,7 @@ export const StyledProduct = styled.li`
         outline: 1px solid ${({ theme }) => theme.colors.mainSecondary};
         height: 70px;
         position: relative;
-        /* background-color: ${({ theme }) => theme.colors.main}; */
+        background-color: ${({ theme }) => theme.colors.backgroundSecondary};
 
         h2 {
             font-size: 1rem;
@@ -74,5 +107,10 @@ export const StyledProduct = styled.li`
             color: ${({ theme }) => theme.colors.mainSecondary};
             background-color: ${({ theme }) => theme.colors.main};
         }
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
     }
 `

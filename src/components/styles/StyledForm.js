@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 import { appearAnimation } from "../../utils/styledComponentsKeyframes"
 
-export const StyledLogin = styled.form`
+export const StyledForm = styled.form`
     margin: 6rem auto;
     width: calc(100% - 1rem);
     max-width: 360px;
@@ -11,8 +11,7 @@ export const StyledLogin = styled.form`
     animation: ${appearAnimation} 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     position: relative;
     z-index: 1;
-
-    h2 {
+    background-color: ${({ theme }) => theme.colors.backgroundSecondary} h2 {
         font-size: 1.25rem;
         color: ${({ theme }) => theme.colors.mainSecondary};
         margin-bottom: 0.5rem;

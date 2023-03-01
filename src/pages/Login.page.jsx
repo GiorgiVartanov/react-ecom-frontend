@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
-import { StyledLogin } from "../components/styles/StyledLogin"
+import { StyledForm } from "../components/styles/StyledForm"
 import { login, reset } from "../features/auth/authSlice"
 
 import Input from "../components/Input"
@@ -11,8 +11,8 @@ import Spinner from "../components/Spinner"
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: { value: "", isError: false, errorMessage: "" },
-        password: { value: "", isError: false, errorMessage: "" },
+        email: { value: "", isError: false, errorList: [] },
+        password: { value: "", isError: false, errorList: [] },
     })
 
     const { email, password } = formData
@@ -42,7 +42,7 @@ const Login = () => {
             [e.target.name]: {
                 value: e.target.value,
                 isError: false,
-                errorMessage: "",
+                errorList: [],
             },
         }))
     }
@@ -61,7 +61,7 @@ const Login = () => {
     if (isLoading) return <Spinner />
 
     return (
-        <StyledLogin onSubmit={onSubmit}>
+        <StyledForm onSubmit={onSubmit}>
             <h2>login</h2>
             <Input
                 type="email"
@@ -90,7 +90,7 @@ const Login = () => {
             >
                 login
             </button>
-        </StyledLogin>
+        </StyledForm>
     )
 }
 export default Login

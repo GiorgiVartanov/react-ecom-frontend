@@ -2,25 +2,42 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
-import { StyledLogin } from "../components/styles/StyledLogin"
+import { StyledForm } from "../components/styles/StyledForm"
 import { register, reset } from "../features/auth/authSlice"
 
 import Input from "../components/Input"
 import Spinner from "../components/Spinner"
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        name: { value: "", isError: false, errorMessage: "" },
-        email: { value: "", isError: false, errorMessage: "" },
-        password: { value: "", isError: false, errorMessage: "" },
-        confirmPassword: { value: "", isError: false, errorMessage: "" },
-    })
-
-    const { name, email, password, confirmPassword } = formData
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const schema = yup.object().shape({
+        name: yup.string().max(30).required(),
+        email: yup.string().email("please enter valid email").required(),
+        password: yup
+            .string()
+            .min(8, "password too short")
+            .max(30, "password to long")
+            .required(),
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref("password"), null], "passwords don't match")
+            .required(),
+    })
+
+    const {
+        register: registerUser,
+        handleSubmit,
+        reset: resetUser,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    })
 
     const { user, isLoading, isError, isSuccess, errorMessage } = useSelector(
         (state) => state.auth
@@ -36,100 +53,63 @@ const Register = () => {
         }
 
         dispatch(reset())
-    }, [user, isError, isSuccess, errorMessage, navigate, dispatch])
+    }, [user, isError, isSuccess, errorMessage, navigate, dispatch, reset])
 
-    const onChange = (e) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.name]: {
-                value: e.target.value,
-                isError: false,
-                errorMessage: "",
-            },
-        }))
-    }
+    const onSubmit = async (data) => {
+        dispatch(register(data))
 
-    const onSubmit = (e) => {
-        e.preventDefault()
-
-        if (password.value !== confirmPassword.value) {
-            setFormData((prevState) => ({
-                ...prevState,
-                password: {
-                    value: prevState.password.value,
-                    isError: true,
-                    errorMessage: "passwords do not match",
-                },
-                confirmPassword: {
-                    value: prevState.confirmPassword.value,
-                    isError: true,
-                    errorMessage: "passwords do not match",
-                },
-            }))
-        } else {
-            const userData = {
-                name: name.value,
-                email: email.value,
-                password: password.value,
-            }
-
-            dispatch(register(userData))
-        }
+        resetUser()
     }
 
     if (isLoading) return <Spinner />
 
     return (
-        <StyledLogin onSubmit={onSubmit}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <h2>register</h2>
             <Input
                 type="text"
                 name="name"
                 id="name"
-                onChange={onChange}
-                value={name.value}
-                isError={name.isError}
-                errorMessage={name.errorMessage}
+                placeholder="Enter your name"
+                errors={errors}
+                register={registerUser}
             />
             <Input
                 type="email"
                 name="email"
                 id="email"
-                onChange={onChange}
-                value={email.value}
-                isError={email.isError}
-                errorMessage={email.errorMessage}
+                placeholder="Enter your email"
+                errors={errors}
+                register={registerUser}
             />
             <Input
                 type="password"
                 name="password"
                 id="password"
-                onChange={onChange}
-                value={password.value}
-                isError={password.isError}
-                errorMessage={password.errorMessage}
+                placeholder="Enter password"
+                errors={errors}
+                register={registerUser}
             />
             <Input
                 type="password"
                 name="confirmPassword"
                 id="confirmPassword"
-                onChange={onChange}
-                value={confirmPassword.value}
-                isError={confirmPassword.isError}
-                errorMessage={confirmPassword.errorMessage}
+                placeholder="Confirm password"
+                errors={errors}
+                register={registerUser}
             />
             <button
                 type="submit"
-                disabled={
-                    formData.name.value === "" ||
-                    formData.email.value === "" ||
-                    formData.password.value === "" ||
-                    formData.confirmPassword.value === ""
-                }
+                // disabled={
+                //     formData.name.value === "" ||
+                //     formData.email.value === "" ||
+                //     formData.password.value === "" ||
+                //     formData.confirmPassword.value === ""
+                // }
             >
                 register
             </button>
-        </StyledLogin>
+        </StyledForm>
     )
 }
 export default Register

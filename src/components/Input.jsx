@@ -1,19 +1,17 @@
 import { StyledInput } from "./styles/StyledInput"
 
-const Input = ({ type, name, id, onChange, value, isError, errorMessage }) => {
+const Input = ({ name, register, id, errors, placeholder, type }) => {
     return (
-        <>
-            <StyledInput
-                isError={isError}
-                type={type}
-                name={name}
+        <StyledInput htmlFor={id}>
+            <input
                 id={id}
-                placeholder={name}
-                onChange={onChange}
-                value={value}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                {...register(name)}
             />
-            {isError ? <span>{errorMessage}</span> : ""}
-        </>
+            {errors && errors[name] ? <span>{errors[name]?.message}</span> : ""}
+        </StyledInput>
     )
 }
 export default Input

@@ -11,7 +11,9 @@ export const StyledCategoryItem = styled.button`
     /* padding: ${({ isSelected }) =>
         isSelected ? "0.25rem 0.75rem" : "0.25rem"}; */
     background-color: ${({ theme, isSelected }) =>
-        isSelected ? theme.colors.text : "transparent"};
+        isSelected
+            ? theme.colors.mainSecondary
+            : theme.colors.backgroundSecondary};
     color: ${({ theme, isSelected }) =>
         isSelected ? theme.colors.main : theme.colors.text};
     animation: ${appearAnimation} 0.2s cubic-bezier(0.4, 0, 0.2, 1);

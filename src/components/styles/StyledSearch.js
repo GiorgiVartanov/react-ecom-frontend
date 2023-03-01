@@ -10,5 +10,7 @@ export const StyledSearch = styled.div`
         margin: 1rem auto;
         width: fit-content;
         gap: 0.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 `
